@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1663264017 source:e:\milton\ensino\estrutura de dados e algoritmos\teda.ed.2022.2\exemplos\teste003\main.cpp
+	<iostream>
+	<vector>
+
+1663262149 source:e:\milton\ensino\estrutura de dados e algoritmos\teda.ed.2022.2\exemplos\teste003\src\t_aluno.cpp
+	"t_Aluno.h"
+
+1663264115 e:\milton\ensino\estrutura de dados e algoritmos\teda.ed.2022.2\exemplos\teste003\include\t_aluno.h
+	<t_Pessoa.h>
+	<string>
+
+1663264080 e:\milton\ensino\estrutura de dados e algoritmos\teda.ed.2022.2\exemplos\teste003\include\t_pessoa.h
+	<string>
+

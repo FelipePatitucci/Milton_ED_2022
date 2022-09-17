@@ -27,7 +27,7 @@ void Apresenta_texto_menu(void)
     cout << "\t1 - Executar a Soma Vetorial" << endl;
     cout << "\t2 - Executar a Multiplicacao por Escalar" << endl;
     cout << "\t3 - Executar a Combinacao Linear" << endl;
-    cout << "\t4 - Executar o Produto_Interno" << endl;
+    cout << "\t4 - Executar o Produto Interno" << endl;
     cout << "\t5 - Executar a Norma 2" << endl;
     cout << "\t6 - Executar o Teste de Dependencia Linear" << endl;
     cout << "+----------------------------------+" << endl;
@@ -59,7 +59,7 @@ void Gera_Vetor(float arr[100], int dim) {
     }
 }
 
-void Multiplicacao_Escalar(float arr1[100], int dim, int k) {
+void Multiplicacao_Escalar(float arr1[100], int dim, float k) {
     for (int i = 0; i < dim; i++) {
         float produto = 0.0;
         if (i == dim - 1) {
@@ -71,7 +71,7 @@ void Multiplicacao_Escalar(float arr1[100], int dim, int k) {
     }
 }
 
-void Combinacao_Linear(float arr1[100], float arr2[100], int dim, int a, int b) {
+void Combinacao_Linear(float arr1[100], float arr2[100], int dim, float a, int b) {
     for (int i = 0; i < dim; i++) {
         float soma = 0.0;
         if (i == dim - 1) {

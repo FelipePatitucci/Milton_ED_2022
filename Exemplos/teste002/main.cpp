@@ -16,6 +16,7 @@
  *--------------------------------------------------------------
 */
 #include <iostream>
+#include <cstring>   
 
 using namespace std;
 
@@ -60,6 +61,43 @@ class t_Curso
     string  Codigo_Curso;
     string  Nome_Curso;
     t_Aluno lista_de_alunos[500];
+    double nota;
+    unsigned int  num_alunos;
+
+	public:
+    void Cadastro(string Codigo, string Nome, t_Aluno* Alunos, double n_nota, unsigned int num_aluno){
+    
+    Codigo_Curso = Codigo;
+    Nome_Curso   = Nome; 
+    num_alunos   = num_aluno;
+    for (int i = 0; i < num_alunos; i++){
+    lista_de_alunos[i] = Alunos[i];
+    }
+    nota = n_nota;
+    }
+    void Print(void){
+    cout<< "   _____                     "<< endl;
+    cout<< "  / ____|                    "<< endl;
+    cout<< " | |    _   _ _ __ ___  ___  "<< endl;
+    cout<< " | |   | | | | '__/ __|/ _ \\ "<< endl;
+    cout<< " | |___| |_| | |  \\__ \\ (_) |"<< endl;
+    cout<< "  \\_____\\__,_|_|  |___/\\___/ "<< endl;
+    cout<< "                             "<< endl;
+    printf("\n");
+    cout << "Nome:  "           << Nome_Curso << endl;
+    cout << "Código do curso: " << Codigo_Curso << endl;
+    cout << "Nota de curso:   " << nota << endl; 
+    cout << "Alunos no curso :" << endl;
+    for (int i = 0; i < num_alunos; i++ ){ 
+	 cout << "- " << lista_de_alunos[i].Nome << endl;
+    }
+    }
+    
+    double operator +(t_Curso curso2){
+    return nota + curso2.nota;
+    }
+
+    
 };
 
 /*--------------------------------------------------------------
@@ -75,21 +113,24 @@ double Media(T a1, T a2)
 //---------------------------------------------------------------
 int main()
 {
-    t_Aluno a1,a2;
+    t_Aluno a1, a2 , a3, a4, a5 ;
+    t_Curso Matematica_Aplicada, Engenharia_Matematica;
 
-    cout << "+-------------------------------------------- +" << endl;
-    cout << "| Exemplo 002: Estruturas de Dados primitivas |" << endl;
-    cout << "+-------------------------------------------- +" << endl << endl;
+    a1.Cadastro(119313142,"Ruan felipe da silva e sousa",7.8);
+    a2.Cadastro(120999109,"Matheus moreira do nascimento",8.9);
+    a3.Cadastro(120994515,"Felipe Patitucci", 9.3);
+    a4.Cadastro(120999313,"Pedro Wong", 9.6);
+    a5.Cadastro(119884322,"Igor Torres", 8.2);
 
-    a1.Cadastro(122001765,"Ze das Coves",7.8);
-    a2.Cadastro(122002893,"Fulano de Tal",8.9);
-    a1.Print();
-    a2.Print();
+    t_Aluno Alunos1[] = {a1,a2,a5};
+    t_Aluno Alunos2[] = {a3,a4};
+    Matematica_Aplicada.Cadastro("3101050000", "Matemática Aplicada",Alunos1 , 3.6, 3);
+    Engenharia_Matematica.Cadastro("3101080000", "Engenharia Matemática ",Alunos2 , 5.4,2);
 
     cout << "Calculando Medias" << endl;
-    cout << "Media entre inteiros 3 e 4  : " << Media(3,4) << endl;
-    cout << "Media entre floats 3.0 e 4.0: " << Media(3.0,4.0) << endl;
-    cout << "Media entre os CRs dos alunos a1 e a2  : " << Media(a1,a2) << endl;
-
+    cout << "Media entre os dois cursos  : " << Media(Matematica_Aplicada,Engenharia_Matematica) << endl;
+    Matematica_Aplicada.Print();
+    printf("\n");
+    Engenharia_Matematica.Print();
     return 0;
 }

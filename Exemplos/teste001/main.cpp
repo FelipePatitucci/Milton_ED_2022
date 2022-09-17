@@ -147,7 +147,8 @@ void Executa_Multiplicacao_Escalar(void)
     cout << "*************************" << endl;
     cout << "* executando a Multiplicacao por Escalar *" << endl;
     cout << "*************************" << endl;
-    int dim_1, escalar;
+    int dim_1;
+    float escalar;
     float vetor_1[100] = {};
     cout << "Digite o tamanho do vetor:";
     cin >> dim_1;
@@ -167,7 +168,8 @@ void Executa_Combinacao_Linear(void)
     cout << "*************************" << endl;
     cout << "* executando a Combinacao Linear *" << endl;
     cout << "*************************" << endl;
-    int dim_1, dim_2, primeiro, segundo;
+    int dim_1, dim_2;
+    float primeiro, segundo;
     float vetor_1[100] = {};
     float vetor_2[100] = {};
     cout << "Digite o tamanho do primeiro vetor:";
@@ -245,7 +247,7 @@ int Executa_Teste_Dependencia_Linear(void)
     cout << "*************************" << endl;
     cout << "* executando teste de Dependencia Linear *" << endl;
     cout << "*************************" << endl;
-    int dim_1, dim_2;
+    float dim_1, dim_2;
     float vetor_1[100] = {};
     float vetor_2[100] = {};
     cout << "Digite o tamanho do primeiro vetor:";

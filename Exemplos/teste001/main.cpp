@@ -16,283 +16,293 @@
  *--------------------------------------------------------------
 */
 #include <iostream>
-#include <cstring>
 #include <cmath>
 
 using namespace std;
 
-void Apresenta_texto_menu(void)
+//___________________________________Utils______________________________________
+int	Gera_Vetor(float vec[100])
 {
-    cout << "+----------------------------------+" << endl;
-    cout << "\t1 - Executar a Soma Vetorial" << endl;
-    cout << "\t2 - Executar a Multiplicacao por Escalar" << endl;
-    cout << "\t3 - Executar a Combinacao Linear" << endl;
-    cout << "\t4 - Executar o Produto Interno" << endl;
-    cout << "\t5 - Executar a Norma 2" << endl;
-    cout << "\t6 - Executar o Teste de Dependencia Linear" << endl;
-    cout << "+----------------------------------+" << endl;
-    cout << "+ aperte a tecla 's' para sair" << endl;
-    cout << "+----------------------------------+" << endl;
+	string	str;
+	int		index;
+	int		elementos = 0;
+
+	getline(cin, str);
+	index = 0;
+	while (str[index]) {
+		if (str[index] != '.' && str[index] != '-'
+			&& str[index] != ' ' && !isdigit(str[index])) {
+			cout << "\nCaracteres invalidos inseridos\n";
+			cout << "      Operação abortada!\n" << endl;
+			return (-1);
+		}
+		index++;
+	}
+	index = 0;
+	while (str[index]) {
+		if (str[index] != ' ') {
+			if (elementos == 100) {
+				cout << "\nNumero de elementos maior que a capacidade máxima\n";
+				cout << "               Operação abortada!\n" << endl;
+				return (-1);
+			}
+			elementos++;
+			vec[0] = atof(str.substr(index).c_str());
+			vec++;
+			while (str[index] && str[index] != ' ')
+				index++;
+		} else {
+			index++;
+		}
+	}
+	return (elementos);
 }
 
-void Dimensoes_Diferentes(int dim1, int dim2, string operacao) {
-    cout << "A operacao " << operacao << " requer que os dois vetores tenham tamanhos iguais" << endl << "Tamanhos recebidos:   " << dim1 << "   ;   " << dim2 << endl;
-}
-
-void Soma_Vetor(float arr1[100], float arr2[100], int dim) {
-    for (int i = 0; i < dim; i++) {
-        float soma = 0.0;
-        if (i == dim - 1) {
-            cout << arr1[i] + arr2[i] << ")" << endl; 
-        }
-        else {
-        cout << arr1[i] + arr2[i] << ", "; 
-        }
-    }
-}
-
-void Gera_Vetor(float arr[100], int dim) {
-    for (int i = 0; i < dim; i++) {
-        float k;
-        cin >> k;
-        arr[i] = k;
-    }
-}
-
-void Multiplicacao_Escalar(float arr1[100], int dim, float k) {
-    for (int i = 0; i < dim; i++) {
-        float produto = 0.0;
-        if (i == dim - 1) {
-            cout << arr1[i]*k << ")" << endl; 
-        }
-        else {
-        cout << arr1[i]*k << ", "; 
-        }
-    }
-}
-
-void Combinacao_Linear(float arr1[100], float arr2[100], int dim, float a, int b) {
-    for (int i = 0; i < dim; i++) {
-        float soma = 0.0;
-        if (i == dim - 1) {
-            cout << a*arr1[i] + b*arr2[i] << ")" << endl; 
-        }
-        else {
-        cout << a*arr1[i] + b*arr2[i] << ", "; 
-        }
-    }
-}
-
-void Produto_Interno(float arr1[100], float arr2[100], int dim) {
-    float soma = 0.0;
-    for (int i = 0; i < dim; i++) {
-        soma += arr1[i]*arr2[i];
-    }
-    cout << soma << endl;
-}
-
-void Norma(float arr1[100], int dim) {
-    float soma = 0.0;
-    for (int i = 0; i < dim; i++) {
-        soma += arr1[i]*arr1[i];
-    }
-    cout << pow(soma, 0.5) << endl;
-}
-
-void Depedencia_Linear(float arr1[100], float arr2[100], int dim) {
-    float soma = 0.0;
-    for (int i = 0; i < dim; i++) {
-        soma += arr1[i]*arr2[i];
-    }
-    // possivelmente só verificar se é menor que uma certa tolerância para
-    // evitar problema de ponto flutuante
-    if (soma == 0.0) {
-        cout << "Os vetores sao Linearmente Independentes" << endl;
-    }
-    else {
-        cout << "Os vetores sao Linearmente Dependentes" << endl;
-    }
-}
-
-void Executa_Soma_Vetorial(void)
+int	Coletar_Vetores(float vetor_1[100], float vetor_2[100])
 {
-    cout << "*************************" << endl;
-    cout << "* executando a Soma Vetorial *" << endl;
-    cout << "*************************" << endl;
-    int dim_1, dim_2;
-    float vetor_1[100] = {};
-    float vetor_2[100] = {};
-    cout << "Digite o tamanho do primeiro vetor:";
-    cin >> dim_1;
-    cout << "Digite os elementos do primeiro vetor:";
-    Gera_Vetor(vetor_1, dim_1);
-    cout << "Digite o tamanho do segundo vetor:";
-    cin >> dim_2;
-    if (dim_1 != dim_2) {
-        Dimensoes_Diferentes(dim_1, dim_2, "Soma de Vetores");
-    }
-    else {
-    cout << "Digite os elementos do segundo vetor:";
-    Gera_Vetor(vetor_2, dim_2);
-    cout << "A soma dos vetores resulta no vetor: (";
-    Soma_Vetor(vetor_1, vetor_2, dim_1);
-    }
-    cout << "Digite 1 para voltar para ao menu de opcoes.";
-    int a;
-    cin >> a;
+	int dim_1;
+	int dim_2;
+
+	cout << "Digite os elementos do primeiro vetor: ";
+	dim_1 = Gera_Vetor(vetor_1);
+	if (dim_1 < 0)
+		return (-1);
+
+	cout << "Digite os elementos do segundo vetor: ";
+	dim_2 = Gera_Vetor(vetor_2);
+	if (dim_2 < 0)
+		return (-1);
+
+	if (dim_1 != dim_2) {
+		cout << "\nA dimensão dos vetores são diferentes\n";
+		cout << "   Primeiro: " << dim_1 << " | Segundo: " << dim_2 << "\n";
+		cout << "         Operação abortada!\n" << endl;
+		return (-1);
+	}
+
+	return (dim_1);
+}
+//___________________________________Utils______________________________________
+
+void	Executa_Teste_Dependencia_Linear(void)
+{
+	float	vetor_1[100];
+	float	vetor_2[100];
+	float	escala;
+	int		index;
+	int		dim;
+
+	cout << "\n******************************************" << endl;
+	cout << "* executando teste de Dependencia Linear *" << endl;
+	cout << "******************************************" << endl;
+
+	dim = Coletar_Vetores(vetor_1, vetor_2);
+	if (dim < 0)
+		return ;
+
+	cout << "Resultado: ";
+
+	//Se os 2 vetores são nulos
+	for (int i = 0; i < dim; i++) {
+		escala += abs(vetor_2[i]) + abs(vetor_1[i]);
+	}
+	if (escala == 0) {
+		cout << "São LD\n" << endl;
+		return ;
+	}
+
+	//Caso em que somente o vetor 2 é nulo
+	index = 0;
+	while (index < dim && vetor_2[index] == 0) {
+		index++;
+	}
+	if (index == dim) {
+		cout << "São LI\n" << endl;
+		return ;
+	}
+
+	//Caso em que vetor_1[index] = 0
+	escala = vetor_1[index] / vetor_2[index];
+	if (escala == 0) {
+		cout << "São LI\n" << endl;
+		return ;
+	}
+
+	//Verificação de fato
+	for (int i = 0; i < dim; i++) {
+		if (abs(escala * vetor_2[i] - vetor_1[i]) > 1e-6) {
+			cout << "São LI\n" << endl;
+			return ;
+		}
+	}
+	cout << "São LD\n" << endl;
 }
 
-void Executa_Multiplicacao_Escalar(void)
+void	Executa_Norma_2(void)
 {
-    cout << "*************************" << endl;
-    cout << "* executando a Multiplicacao por Escalar *" << endl;
-    cout << "*************************" << endl;
-    int dim_1;
-    float escalar;
-    float vetor_1[100] = {};
-    cout << "Digite o tamanho do vetor:";
-    cin >> dim_1;
-    cout << "Digite os elementos do primeiro vetor:";
-    Gera_Vetor(vetor_1, dim_1);
-    cout << "Digite o escalar pelo qual deseja multiplicar o vetor:";
-    cin >> escalar;
-    cout << "A multiplicacao do vetor pelo escalar resulta no vetor: (";
-    Multiplicacao_Escalar(vetor_1, dim_1, escalar);
-    cout << "Digite 1 para voltar para ao menu de opcoes.";
-    int a;
-    cin >> a;
+	float vetor_1[100];
+	float soma = 0;
+	int dim_1;
+
+	cout << "\n*********************************" << endl;
+	cout << "* executando a Norma 2 do Vetor *" << endl;
+	cout << "*********************************" << endl;
+
+	cout << "Digite os elementos do primeiro vetor: ";
+	dim_1 = Gera_Vetor(vetor_1);
+	if (dim_1 < 0)
+		return ;
+
+	cout << "Resultado: ";
+	for (int i = 0; i < dim_1; i++) {
+		soma += vetor_1[i] * vetor_1[i];
+	}
+	cout << sqrt(soma) << "\n" << endl;
 }
 
-void Executa_Combinacao_Linear(void)
+void	Executa_Produto_Interno(void)
 {
-    cout << "*************************" << endl;
-    cout << "* executando a Combinacao Linear *" << endl;
-    cout << "*************************" << endl;
-    int dim_1, dim_2;
-    float primeiro, segundo;
-    float vetor_1[100] = {};
-    float vetor_2[100] = {};
-    cout << "Digite o tamanho do primeiro vetor:";
-    cin >> dim_1;
-    cout << "Digite os elementos do primeiro vetor:";
-    Gera_Vetor(vetor_1, dim_1);
-    cout << "Digite o tamanho do segundo vetor:";
-    cin >> dim_2;
-    if (dim_1 != dim_2) {
-        Dimensoes_Diferentes(dim_1, dim_2, "Combinacao Linear");
-    }
-    else {
-    cout << "Digite os elementos do segundo vetor:";
-    Gera_Vetor(vetor_2, dim_2);
-    cout << "Digite o valor que multiplica o primeiro vetor: ";
-    cin >> primeiro;
-    cout << "Digite o valor que multiplica o segundo vetor: ";
-    cin >> segundo;
-    cout << "A combinacao linear dos vetores usando os coeficientes a e b resulta no vetor: (";
-    Combinacao_Linear(vetor_1, vetor_2, dim_1, primeiro, segundo);
-    }
-    cout << "Digite 1 para voltar para ao menu de opcoes.";
-    int l;
-    cin >> l;
+	float	vetor_1[100];
+	float	vetor_2[100];
+	float	soma = 0;
+	int		dim;
+
+	cout << "\n********************************" << endl;
+	cout << "* executando o Produto Interno *" << endl;
+	cout << "********************************" << endl;
+
+	dim = Coletar_Vetores(vetor_1, vetor_2);
+	if (dim < 0)
+		return ;
+
+	cout << "Resultado: ";
+	for (int i = 0; i < dim; i++) {
+		soma += vetor_1[i] * vetor_2[i];
+	}
+	cout << soma << "\n" << endl;
 }
 
-void Executa_Produto_Interno(void)
+void	Executa_Combinacao_Linear(void)
 {
-    cout << "*************************" << endl;
-    cout << "* executando o Produto Interno *" << endl;
-    cout << "*************************" << endl;
-    int dim_1, dim_2;
-    float vetor_1[100] = {};
-    float vetor_2[100] = {};
-    cout << "Digite o tamanho do primeiro vetor:";
-    cin >> dim_1;
-    cout << "Digite os elementos do primeiro vetor:";
-    Gera_Vetor(vetor_1, dim_1);
-    cout << "Digite o tamanho do segundo vetor:";
-    cin >> dim_2;
-    if (dim_1 != dim_2) {
-        Dimensoes_Diferentes(dim_1, dim_2, "Produto Interno");
-    }
-    else {
-    cout << "Digite os elementos do segundo vetor:";
-    Gera_Vetor(vetor_2, dim_2);
-    cout << "O produto interno dos vetores resulta no valor: ";
-    Produto_Interno(vetor_1, vetor_2, dim_1);
-    }
-    cout << "Digite 1 para voltar para ao menu de opcoes.";
-    int l;
-    cin >> l;
+	string	str;
+	float	vetor_1[100];
+	float	vetor_2[100];
+	float	primeiro;
+	float	segundo;
+	int		dim;
+
+	cout << "\n**********************************" << endl;
+	cout << "* executando a Combinacao Linear *" << endl;
+	cout << "**********************************" << endl;
+
+	dim = Coletar_Vetores(vetor_1, vetor_2);
+	if (dim < 0)
+		return ;
+
+	cout << "Digite o valor que multiplica o primeiro vetor: ";
+	getline(cin, str);
+	primeiro = atof(str.c_str());
+
+	cout << "Digite o valor que multiplica o segundo vetor: ";
+	getline(cin, str);
+	segundo = atof(str.c_str());
+
+	cout << "Resultado: (";
+	for (int i = 0; i < dim; i++) {
+		cout << primeiro * vetor_1[i] + segundo * vetor_2[i] ;
+		cout << (i == dim - 1 ? ")\n" : ", ");
+	}
+	cout << endl;
 }
 
-void Executa_Norma_2(void)
+void	Executa_Multiplicacao_Escalar(void)
 {
-    cout << "*************************" << endl;
-    cout << "* executando a Norma 2 do Vetor *" << endl;
-    cout << "*************************" << endl;
-    int dim_1;
-    float vetor_1[100] = {};
-    cout << "Digite o tamanho do vetor:";
-    cin >> dim_1;
-    cout << "Digite os elementos do vetor:";
-    Gera_Vetor(vetor_1, dim_1);
-    cout << "A norma do vetor resulta no valor: ";
-    Norma(vetor_1, dim_1);
-    cout << "Digite 1 para voltar para ao menu de opcoes.";
-    int l;
-    cin >> l;
+	string	str;
+	float	vetor_1[100];
+	float	escalar;
+	int		dim_1;
+
+	cout << "\n******************************************" << endl;
+	cout << "* executando a Multiplicacao por Escalar *" << endl;
+	cout << "******************************************" << endl;
+
+	cout << "Digite os elementos do primeiro vetor: ";
+	dim_1 = Gera_Vetor(vetor_1);
+	if (dim_1 < 0)
+		return ;
+
+	cout << "Digite o escalar pelo qual deseja multiplicar o vetor: ";
+	getline(cin, str);
+	escalar = atof(str.c_str());
+
+	cout << "Resultado: (";
+	for (int i = 0; i < dim_1; i++) {
+		cout << vetor_1[i] * escalar;
+		cout << (i == dim_1 - 1 ? ")\n" : ", ");
+	}
+	cout << endl;
 }
 
-int Executa_Teste_Dependencia_Linear(void)
+void	Executa_Soma_Vetorial(void)
 {
-    cout << "*************************" << endl;
-    cout << "* executando teste de Dependencia Linear *" << endl;
-    cout << "*************************" << endl;
-    float dim_1, dim_2;
-    float vetor_1[100] = {};
-    float vetor_2[100] = {};
-    cout << "Digite o tamanho do primeiro vetor:";
-    cin >> dim_1;
-    cout << "Digite os elementos do primeiro vetor:";
-    Gera_Vetor(vetor_1, dim_1);
-    cout << "Digite o tamanho do segundo vetor:";
-    cin >> dim_2;
-    if (dim_1 != dim_2) {
-        Dimensoes_Diferentes(dim_1, dim_2, "Produto Interno");
-    }
-    else {
-    cout << "Digite os elementos do segundo vetor:";
-    Gera_Vetor(vetor_2, dim_2);
-    Depedencia_Linear(vetor_1, vetor_2, dim_1);
-    }
-    cout << "Digite 1 para voltar para ao menu de opcoes.";
-    int l;
-    cin >> l;
+	float	vetor_1[100];
+	float	vetor_2[100];
+	int		dim;
+
+	cout << "\n******************************" << endl;
+	cout << "* executando a Soma Vetorial *" << endl;
+	cout << "******************************" << endl;
+
+	dim = Coletar_Vetores(vetor_1, vetor_2);
+	if (dim < 0)
+		return ;
+
+	cout << "Resultado: (";
+	for (int i = 0; i < dim; i++) {
+		cout << vetor_1[i] + vetor_2[i];
+		cout << (i == dim - 1 ? ")\n" : ", ");
+	}
+	cout << endl;
 }
 
-void Menu(void)
+void	Apresenta_texto_menu(void)
 {
-    char opcao_escolhida;
-
-    do {
-        Apresenta_texto_menu();
-        cin >> opcao_escolhida;
-        switch (opcao_escolhida) {
-            case '1' : Executa_Soma_Vetorial(); break;
-            case '2' : Executa_Multiplicacao_Escalar(); break;
-            case '3' : Executa_Combinacao_Linear(); break;
-            case '4' : Executa_Produto_Interno(); break;
-            case '5' : Executa_Norma_2(); break;
-            case '6' : Executa_Teste_Dependencia_Linear(); break;
-            case 's' : break;
-            default  : cout << "Opcao invalida, tente novamente, ou 's' para sair" << endl;
-        }
-    } while (opcao_escolhida != 's');
+	cout << "+----------------------------------+" << endl;
+	cout << "\t1 - Executar a Soma Vetorial" << endl;
+	cout << "\t2 - Executar a Multiplicacao por Escalar" << endl;
+	cout << "\t3 - Executar a Combinacao Linear" << endl;
+	cout << "\t4 - Executar o Produto Interno" << endl;
+	cout << "\t5 - Executar a Norma 2" << endl;
+	cout << "\t6 - Executar o Teste de Dependencia Linear" << endl;
+	cout << "+----------------------------------+" << endl;
+	cout << "+ aperte a tecla 's' para sair" << endl;
+	cout << "+----------------------------------+" << endl;
 }
 
-int main()
+void	Menu(void)
 {
-    cout << "Exemplo 001: Menu de Opcoes simples " << endl;
-    Menu();
+	string opcao_escolhida;
 
-    return 0;
+	do {
+		Apresenta_texto_menu();
+		getline(cin, opcao_escolhida);
+		switch (opcao_escolhida[0]) {
+			case '1' : Executa_Soma_Vetorial(); break;
+			case '2' : Executa_Multiplicacao_Escalar(); break;
+			case '3' : Executa_Combinacao_Linear(); break;
+			case '4' : Executa_Produto_Interno(); break;
+			case '5' : Executa_Norma_2(); break;
+			case '6' : Executa_Teste_Dependencia_Linear(); break;
+			case 's' : break;
+			default  : cout << "Opcao invalida, tente novamente, ou 's' para sair" << endl;
+		}
+	} while (opcao_escolhida[0] != 's');
+}
+
+int	main()
+{
+	cout << "Exemplo 001: Menu de Opcoes simples " << endl;
+	Menu();
+
+	return 0;
 }

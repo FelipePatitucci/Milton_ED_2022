@@ -107,7 +107,7 @@ void	Executa_Teste_Dependencia_Linear(void)
 		escala += abs(vetor_2[i]) + abs(vetor_1[i]);
 	}
 	if (escala == 0) {
-		cout << "São linearmente dependentes\n" << endl;
+		cout << "São LD\n" << endl;
 		return ;
 	}
 
@@ -117,25 +117,25 @@ void	Executa_Teste_Dependencia_Linear(void)
 		index++;
 	}
 	if (index == dim) {
-		cout << "Não são linearmente dependentes\n" << endl;
+		cout << "São LI\n" << endl;
 		return ;
 	}
 
 	//Caso em que vetor_1[index] = 0
 	escala = vetor_1[index] / vetor_2[index];
 	if (escala == 0) {
-		cout << "Não são linearmente dependentes\n" << endl;
+		cout << "São LI\n" << endl;
 		return ;
 	}
 
 	//Verificação de fato
 	for (int i = 0; i < dim; i++) {
 		if (abs(escala * vetor_2[i] - vetor_1[i]) > 1e-6) {
-			cout << "Não são linearmente dependentes\n" << endl;
+			cout << "São LI\n" << endl;
 			return ;
 		}
 	}
-	cout << "São linearmente dependentes\n" << endl;
+	cout << "São LD\n" << endl;
 }
 
 void	Executa_Norma_2(void)
